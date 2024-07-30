@@ -3,14 +3,14 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "index"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path" : "pages/demo1/demo1",
 			"style" : 
 			{
-				"navigationBarTitleText" : "计划航班"
+				"navigationStyle": "custom"
 			}
 		}
 	],
