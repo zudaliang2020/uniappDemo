@@ -12,7 +12,9 @@
 		<view class="content">
 			<view class="table">
 				<view class="tr">
-					<view class="th"><text>航班时间</text></view>
+					<view class="th"><text>航班时间</text>
+						<view class="diamond"></view>
+					</view>
 					<view class="th"><text>航班号</text></view>
 					<view class="th"><text>飞机号</text></view>
 					<view class="th"><text>起降机场</text></view>
@@ -21,40 +23,40 @@
 				</view>
 				<view class="scroll-box">
 					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view class="td">
-						<view class="td" title="flightNumber"><text>S9801</text></view class="td">
-						<view class="td" title="aircraftNumber"><text>B2972</text></view class="td">
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view class="td">
-						<view class="td" title="boardingGate"><text class="boardingGate">221-02</text></view class="td">
-						<view class="td" title="aircrew"><text class="view" @click="open">查看</text></view class="td">
-						<view class="td favorite hidden" title="favorite"><text>收藏</text></view class="td">
+						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
+						<view class="td" title="flightNumber"><text>S9801</text></view>
+						<view class="td" title="aircraftNumber"><text>B2972</text></view>
+						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
+						<view class="td" title="boardingGate"><text>221-02</text></view>
+						<view class="td" title="aircrew"><text class="view" @click="open">查看</text></view>
+						<view class="td favorite hidden" title="favorite"><text>收藏</text></view>
 					</view>
 					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view class="td">
-						<view class="td" title="flightNumber"><text>S9801</text></view class="td">
-						<view class="td" title="aircraftNumber"><text>B2972</text></view class="td">
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view class="td">
-						<view class="td" title="boardingGate"><text class="boardingGate">-</text></view class="td">
-						<view class="td" title="aircrew"><text class="view">查看</text></view class="td">
-						<view class="td favorite hidden" title="favorite"><text>收藏</text></view class="td">
+						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
+						<view class="td" title="flightNumber"><text>S9801</text></view>
+						<view class="td" title="aircraftNumber"><text>B2972</text></view>
+						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
+						<view class="td" title="boardingGate"><text>-</text></view>
+						<view class="td" title="aircrew"><text class="view">查看</text></view>
+						<view class="td favorite hidden" title="favorite"><text>收藏</text></view>
 					</view>
 					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view class="td">
-						<view class="td" title="flightNumber"><text>S9801</text></view class="td">
-						<view class="td" title="aircraftNumber"><text>B2972</text></view class="td">
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view class="td">
-						<view class="td" title="boardingGate"><text class="boardingGate">221-02</text></view class="td">
-						<view class="td" title="aircrew"><text class="view">查看</text></view class="td">
-						<view class="td favorite" title="favorite"><text>收藏</text></view class="td">
+						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
+						<view class="td" title="flightNumber"><text>S9801</text></view>
+						<view class="td" title="aircraftNumber"><text>B2972</text></view>
+						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
+						<view class="td" title="boardingGate"><text>221-02</text></view>
+						<view class="td" title="aircrew"><text class="view">查看</text></view>
+						<view class="td favorite" title="favorite"><text>收藏</text></view>
 					</view>
 					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view class="td">
-						<view class="td" title="flightNumber"><text>S9801</text></view class="td">
-						<view class="td" title="aircraftNumber"><text>B2972</text></view class="td">
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view class="td">
-						<view class="td" title="boardingGate"><text class="boardingGate">221-02</text></view class="td">
-						<view class="td" title="aircrew"><text class="view">查看</text></view class="td">
-						<view class="td favorite active" title="favorite"><text>取消收藏</text></view class="td">
+						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
+						<view class="td" title="flightNumber"><text>S9801</text></view>
+						<view class="td" title="aircraftNumber"><text>B2972</text></view>
+						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
+						<view class="td" title="boardingGate"><text>221-02</text></view>
+						<view class="td" title="aircrew"><text class="view">查看</text></view>
+						<view class="td favorite active" title="favorite"><text>取消收藏</text></view>
 					</view>
 				</view>
 
@@ -127,22 +129,30 @@
 			</view>
 		</uni-popup>
 		<view class="navigation">
-			<view class="box now">
-				<view class="icon"></view>
-				<text>航前关注</text>
-			</view>
-			<view class="box">
-				<view class="icon"></view>
-				<text>航班QAR</text>
-			</view>
-			<view class="box">
-				<view class="icon"></view>
-				<text>个人统计</text>
-			</view>
-			<view class="box">
-				<view class="icon"></view>
-				<text>我</text>
-			</view>
+			<navigator class="navigator" url="#">
+				<view class="box now">
+					<view class="icon"></view>
+					<text>航前关注</text>
+				</view>
+			</navigator>
+			<navigator class="navigator" url="/pages/flightQualityAssuranceReview/flightQualityAssuranceReview">
+				<view class="box">
+					<view class="icon"></view>
+					<text>航班QAR</text>
+				</view>
+			</navigator>
+			<navigator class="navigator" url="/pages/personalDataStats/personalDataStats">
+				<view class="box">
+					<view class="icon"></view>
+					<text>个人统计</text>
+				</view>
+			</navigator>
+			<navigator class="navigator" url="/pages/accountInformation/accountInformation">
+				<view class="box">
+					<view class="icon"></view>
+					<text>我</text>
+				</view>
+			</navigator>
 		</view>
 	</view>
 
@@ -174,7 +184,7 @@
 		display: flex;
 
 		.title {
-			width: 80vw;
+			width: 75vw;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -188,6 +198,7 @@
 
 			.icon {
 				padding: 2px;
+				margin: 2px;
 				border: 1px solid #555555;
 				border-radius: 50%;
 				background: #25324F;
@@ -221,9 +232,9 @@
 
 			.tr {
 				display: flex;
-				flex-direction: row;
 				justify-content: center;
 				align-items: center;
+				text-align: center;
 
 				.th {
 					background: #25324F;
@@ -232,7 +243,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-
+					padding-left: 2px;
 				}
 
 				.td {
@@ -246,10 +257,6 @@
 
 					.view {
 						color: #409EFF;
-					}
-
-					.boardingGate {
-						text-align: center;
 					}
 
 				}
@@ -266,6 +273,51 @@
 
 				.hidden {
 					display: none;
+				}
+
+				.diamond {
+					position: relative;
+					width: 12px;
+					height: 12px;
+					margin-left: 2px;
+				}
+
+				.diamond::before,
+				.diamond::after {
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-style: solid;
+				}
+
+				.diamond::before {
+					border-width: 0 6px 6px 6px;
+					border-color: transparent transparent white transparent;
+					/* 上半部分三角形 */
+					top: 0;
+					left: 0;
+
+
+				}
+
+				.diamond::after {
+					border-width: 6px 6px 0 6px;
+					border-color: white transparent transparent transparent;
+					/* 下半部分三角形 */
+					bottom: 0;
+					left: 0;
+				}
+
+				/* 为了调整两个三角形之间的空隙 */
+				.diamond::before {
+					margin-bottom: 3px;
+					/* 控制空隙的大小 */
+				}
+
+				.diamond::after {
+					margin-top: 3px;
+					/* 控制空隙的大小 */
 				}
 			}
 		}
@@ -292,9 +344,11 @@
 			background: #2C3F60;
 			border-radius: 1%;
 			padding: 8px;
+
 			.table {
 				background: #2C3F60;
-				border-collapse: collapse;
+				padding: 8px 0;
+
 				.tr {
 					display: flex;
 					flex-direction: row;
@@ -302,12 +356,30 @@
 
 					.th,
 					.td {
-						border: 1px solid #555555;
-						flex: 1 ;
-						padding: 8px;
+						border-top: 1px solid #555555;
+						border-left: 1px solid #555555;
+						flex: 1;
+						padding: 8px 0;
+						display: flex;
+						align-items: center;
+					}
+
+					.th:first-of-type,
+					.td:first-of-type {
+						flex: 2 1 0;
+					}
+
+					.th:last-of-type,
+					.td:last-of-type {
+						border-right: 1px solid #555555;
 					}
 				}
 
+				.tr:last-of-type {
+					.td {
+						border-bottom: 1px solid #555555;
+					}
+				}
 			}
 		}
 	}
@@ -317,31 +389,31 @@
 		height: 59px;
 		border-top: 1px solid #555555;
 		display: flex;
-		justify-content: center;
 		align-items: center;
 
-		.box {
-			flex: auto;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
+		.navigator {
+			flex: 1;
 
-			.icon {
-				width: 24px;
-				height: 24px;
-				border-radius: 50%;
-				background: #AAAAAA;
+			.box {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				.icon {
+					width: 24px;
+					height: 24px;
+					border-radius: 50%;
+					background: #AAAAAA;
+				}
+			}
+
+			.now {
+				color: white;
+
+				.icon {
+					background-color: white;
+				}
 			}
 		}
-
-		.now {
-			color: white;
-
-			.icon {
-				background-color: white;
-			}
-		}
-
 	}
 </style>

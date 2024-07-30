@@ -7,10 +7,24 @@
 			}
 		},
 		{
-			"path" : "pages/demo1/demo1",
+			"path" : "pages/flightQualityAssuranceReview/flightQualityAssuranceReview",
 			"style" : 
 			{
 				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/personalDataStats/personalDataStats",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/accountInformation/accountInformation",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
 			}
 		}
 	],
