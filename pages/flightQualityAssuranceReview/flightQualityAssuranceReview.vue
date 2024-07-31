@@ -1,11 +1,13 @@
 <template>
-	<view>航班QAR</view>
+	<view class="">
+		航班QAR
+	</view>
 </template>
 
 <script setup>
 	
 </script>
 
-<style lang="scss">
-	
+<style lang="scss" scoped>
+
 </style>

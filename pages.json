@@ -10,14 +10,14 @@
 			"path" : "pages/flightQualityAssuranceReview/flightQualityAssuranceReview",
 			"style" : 
 			{
-				"navigationStyle": "custom"
+				"navigationBarTitleText" : ""
 			}
 		},
 		{
 			"path" : "pages/personalDataStats/personalDataStats",
 			"style" : 
 			{
-				"navigationStyle": "custom"
+				"navigationBarTitleText" : ""
 			}
 		},
 		{

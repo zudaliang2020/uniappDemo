@@ -1,5 +1,6 @@
 <template>
 	<view class="layout">
+		<!-- 顶部功能区 -->
 		<view class="head">
 			<view class="title"><text>计划航班</text></view>
 			<view class="iconBox">
@@ -9,10 +10,11 @@
 				</uni-badge>
 			</view>
 		</view>
+		<!-- 中部内容层 -->
 		<view class="content">
 			<view class="table">
 				<view class="tr">
-					<view class="th"><text>航班时间</text>
+					<view class="th" @click="sortByFlightSchedule()"><text>航班时间</text>
 						<view class="diamond"></view>
 					</view>
 					<view class="th"><text>航班号</text></view>
@@ -22,112 +24,99 @@
 					<view class="th"><text>机组</text></view>
 				</view>
 				<view class="scroll-box">
-					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
-						<view class="td" title="flightNumber"><text>S9801</text></view>
-						<view class="td" title="aircraftNumber"><text>B2972</text></view>
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
-						<view class="td" title="boardingGate"><text>221-02</text></view>
-						<view class="td" title="aircrew"><text class="view" @click="open">查看</text></view>
-						<view class="td favorite hidden" title="favorite"><text>收藏</text></view>
-					</view>
-					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
-						<view class="td" title="flightNumber"><text>S9801</text></view>
-						<view class="td" title="aircraftNumber"><text>B2972</text></view>
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
-						<view class="td" title="boardingGate"><text>-</text></view>
-						<view class="td" title="aircrew"><text class="view">查看</text></view>
-						<view class="td favorite hidden" title="favorite"><text>收藏</text></view>
-					</view>
-					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
-						<view class="td" title="flightNumber"><text>S9801</text></view>
-						<view class="td" title="aircraftNumber"><text>B2972</text></view>
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
-						<view class="td" title="boardingGate"><text>221-02</text></view>
-						<view class="td" title="aircrew"><text class="view">查看</text></view>
-						<view class="td favorite" title="favorite"><text>收藏</text></view>
-					</view>
-					<view class="tr">
-						<view class="td" title="flightSchedule"><text>06/20<br>08:05</text></view>
-						<view class="td" title="flightNumber"><text>S9801</text></view>
-						<view class="td" title="aircraftNumber"><text>B2972</text></view>
-						<view class="td" title="airport"><text>ZBAA-ZGSZ</text></view>
-						<view class="td" title="boardingGate"><text>221-02</text></view>
-						<view class="td" title="aircrew"><text class="view">查看</text></view>
-						<view class="td favorite active" title="favorite"><text>取消收藏</text></view>
+					<view v-for="(item,index) in flight" :key="item.flightNumber" class="tr"
+						@touchstart="startTouch(index, $event)" @touchmove="onTouchMove" @touchend="endTouch"
+						@mousedown="startDrag(index, $event)">
+						<view class="td" title="flightSchedule">
+							<text>{{item.flightSchedule.substr(0,2)}}/{{item.flightSchedule.substr(2,2)}}<br>{{item.flightSchedule.substr(4,2)}}:{{item.flightSchedule.substr(6,2)}}</text>
+						</view>
+						<view class="td" title="flightNumber"><text>{{item.flightNumber}}</text></view>
+						<view class="td" title="aircraftNumber"><text>{{item.aircraftNumber}}</text></view>
+						<view class="td" title="airport"><text>{{item.airport}}</text></view>
+						<view class="td" title="boardingGate"><text>{{item.boardingGate}}</text></view>
+						<view class="td" title="aircrew"><text class="view" @click="open(item.flightNumber)">查看</text>
+						</view>
+						<template v-if="isShow[index]">
+							<template v-if="!item.favorite">
+								<view class="td favorite" title="favorite" @click="handleFavorite(index)">
+									<text>收藏</text>
+								</view>
+							</template>
+							<template v-else>
+								<view class="td favorite active" title="favorite" @click="handleFavorite(index)">
+									<text>取消收藏</text>
+								</view>
+							</template>
+						</template>
 					</view>
 				</view>
 
 			</view>
 		</view>
-		<uni-popup ref="showDetails" type="center" :animation="false" :mask-click="false">
+		<!-- 查看机组详情弹窗 -->
+		<uni-popup ref="popup" type="center" :animation="false" :mask-click="false">
 			<view class="datails-box">
 				<view class="close" @click="close"><uni-icons type="close" size="16" color="#c5c5c5"></uni-icons></view>
 				<view class="table-box">
 					<text>机组人员</text>
-					<view class="table" border stripe emptyText="暂无更多数据">
+					<view class="table">
 						<!-- 表头行 -->
 						<view class="tr">
 							<view class="th"><text></text></view>
-							<view class="th"><text>张三</text></view>
-							<view class="th"><text>李四</text></view>
-							<view class="th"><text>xxx</text></view>
+							<view v-for="(item,index) in datails" :key="index" class="th"><text>{{item.name}}</text>
+							</view>
 						</view>
 						<!-- 表格数据行 -->
 						<view class="tr">
 							<view class="td"><text>机上岗位</text></view>
-							<view class="td"><text>责任机长</text></view>
-							<view class="td"><text>副驾</text></view>
-							<view class="td"><text>跟班学员</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index"><text>{{item.post}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>技术等级</text></view>
-							<view class="td"><text>TB</text></view>
-							<view class="td"><text>TB</text></view>
-							<view class="td"><text>F3</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index">
+								<text>{{item.skillLevel}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>左座飞行经历时间</text></view>
-							<view class="td"><text>2345.5h</text></view>
-							<view class="td"><text>1345.5h</text></view>
-							<view class="td"><text>345.5h</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index"><text>{{item.LExpTime}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>右座飞行经历时间</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index"><text>{{item.RExpTime}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>责任机长飞行经历时间</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index">
+								<text>{{item.CaptainExpTime}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>左座次数</text></view>
-							<view class="td"><text>423</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index">
+								<text>{{item.LSeatCount}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>右座次数</text></view>
-							<view class="td"><text>543</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index">
+								<text>{{item.RSeatCount}}</text>
+							</view>
 						</view>
 						<view class="tr">
 							<view class="td"><text>着陆提纵次数</text></view>
-							<view class="td"><text>293</text></view>
-							<view class="td"><text>xx</text></view>
-							<view class="td"><text>xx</text></view>
+							<view class="td" v-for="(item,index) in datails" :key="index">
+								<text>{{item.LandingCount}}</text>
+							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</uni-popup>
+		<!-- 底部导航栏 -->
 		<view class="navigation">
 			<navigator class="navigator" url="#">
 				<view class="box now">
@@ -158,21 +147,188 @@
 
 </template>
 
-<script>
-	export default {
-		methods: {
-			open() {
-				// 通过组件定义的ref调用uni-popup方法 ,如果传入参数 ，type 属性将失效 ，仅支持 ['top','left','bottom','right','center']
-				this.$refs.showDetails.open('center')
+<script setup>
+	import {
+		ref
+	} from 'vue';
+
+	// 获取flight数据
+	// flightSchedule: 航班时间
+	// flightNumber: 航班号
+	// aircraftNumber: 飞机号
+	// airport:起降机场
+	// boardingGate: 机位-准备室
+	// favorite: 收藏状态,0-该用户未收藏,1-该用户已收藏
+	const mock1 = [{
+		flightSchedule: "06200805",
+		flightNumber: "S9801",
+		aircraftNumber: "B2972",
+		airport: "ZBAA-ZGSZ",
+		boardingGate: "221-02",
+		favorite: 0
+	}, {
+		flightSchedule: "06190805",
+		flightNumber: "S9802",
+		aircraftNumber: "B2972",
+		airport: "ZBAA-ZGSZ",
+		boardingGate: "602-34",
+		favorite: 0
+	}, {
+		flightSchedule: "06180805",
+		flightNumber: "S9803",
+		aircraftNumber: "B2972",
+		airport: "ZBAA-ZGSZ",
+		boardingGate: "602-34",
+		favorite: 0
+	}, {
+		flightSchedule: "06180804",
+		flightNumber: "S9804",
+		aircraftNumber: "B2972",
+		airport: "ZBAA-ZGSZ",
+		boardingGate: "-",
+		favorite: 1
+	}, ];
+	const flight = ref(mock1);
+
+	let datails = ref(0);
+
+	//打开&关闭弹窗
+	// 创建响应式数据
+	const popupType = ref('center');
+	// 获取组件引用
+	const popup = ref(null);
+	// 打开弹窗的方法
+	function open(flightNum, type) {
+
+		console.log(flightNum);
+		// 根据 航班号flightNum 获取 机组信息datails数据
+		// 	name: 姓名
+		// 	post: 机上岗位
+		// 	skillLevel:技术等级
+		// 	LExpTime:左座飞行经历时间
+		// 	RExpTime:左座飞行经历时间
+		// 	CaptainExpTime:责任机长飞行经历时间
+		// ﻿	LSeatCount:左座次数
+		// 	RSeatCount:右座次数
+		// 	LandingCount:着陆提纵次数
+		const mock2 = [{
+				name: '张三',
+				post: '责任机长',
+				skillLevel: 'TB',
+				LExpTime: '2345.5h',
+				RExpTime: 'xx',
+				CaptainExpTime: 'xx',
+				LSeatCount: '423',
+				RSeatCount: '543',
+				LandingCount: '293'
 			},
-			close() {
-				this.$refs.showDetails.close()
-			}
+			{
+				name: '李四',
+				post: '副驾',
+				skillLevel: 'TB',
+				LExpTime: '1345.5h',
+				RExpTime: 'xx',
+				CaptainExpTime: 'xx',
+				LSeatCount: 'xx',
+				RSeatCount: 'xx',
+				LandingCount: 'xx'
+			},
+			{
+				name: 'xxx',
+				post: '跟班学员',
+				skillLevel: 'F3',
+				LExpTime: '345.5h',
+				RExpTime: 'xx',
+				CaptainExpTime: 'xx',
+				LSeatCount: 'xx',
+				RSeatCount: 'xx',
+				LandingCount: 'xx'
+			},
+		];
+		datails = ref(mock2);	
+
+		popupType.value = type; // 更新弹出方向
+		if (popup.value) {
+			popup.value.open(); // 调用组件的 open 方法
 		}
+
+	};
+	// 关闭弹窗的方法
+	function close() {
+		popup.value.close();
+	};
+
+	// 显示&隐藏收藏
+	// 定义 refs 和初始变量
+	let startX = 0; // 鼠标或触摸的起始位置
+	let isDragging = false; // 标志变量，用于确定是否正在拖动
+	let key = 0; //标志变量，用于确定当前点击的是key行
+	const isShow = ref(new Array(mock1.length).fill(false)); //标志变量，用于标志key行收藏是否显示
+
+	// 鼠标事件处理函数
+	const startDrag = (index, event) => {
+		startX = event.clientX; // 记录鼠标按下时的 X 坐标
+		isDragging = true; // 设置拖动标志为 true
+		key = index; // 记录鼠标按下时的行数
+		document.addEventListener('mousemove', onMouseMove); // 监听鼠标移动事件
+		document.addEventListener('mouseup', stopDrag); // 监听鼠标释放事件
+	};
+
+	const onMouseMove = (event) => {
+		if (!isDragging) return; // 如果不是拖动状态，直接返回
+		const deltaX = event.clientX - startX; // 计算拖动的水平距离
+		if (deltaX > -10) { // 鼠标拖动向右，关闭收藏夹
+			isShow.value[key] = false;
+		} else { // 鼠标拖动向左，显示收藏夹
+			isShow.value[key] = true;
+		}
+	};
+
+	const stopDrag = () => {
+		isDragging = false; // 结束拖动状态
+		document.removeEventListener('mousemove', onMouseMove); // 移除鼠标移动事件监听器
+		document.removeEventListener('mouseup', stopDrag); // 移除鼠标释放事件监听器
+	};
+
+	// 触摸事件处理函数
+	const startTouch = (index, event) => {
+		startX = event.touches[0].clientX; // 记录触摸开始时的 X 坐标
+		key = index; // 记录触摸开始时的行数
+	};
+
+	const onTouchMove = (event) => {
+		const currentTouchX = event.touches[0].clientX; // 当前触摸点的 X 坐标
+		const deltaX = currentTouchX - startX; // 计算触摸滑动的水平距离
+		if (deltaX > -10) { // 触摸滑动向右，关闭收藏夹
+			isShow.value[key] = false;
+		} else { // 触摸滑动向左，显示收藏夹
+			isShow.value[key] = true;
+		}
+	};
+
+	const endTouch = () => {
+		// 触摸结束时的处理
+	};
+
+	// 用户点击收藏
+	function handleFavorite(index) {
+		flight.value[index].favorite = (flight.value[index].favorite + 1) % 2;
+	}
+
+	// 用户点击排序
+	let isDown = true; //初始默认降序
+	function sortByFlightSchedule() {
+		if (isDown) {
+			flight.value.sort((a, b) => a.flightSchedule - b.flightSchedule);
+
+		} else {
+			flight.value.sort((a, b) => b.flightSchedule - a.flightSchedule);
+		}
+		isDown = !isDown;
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.layout {
 		height: 100vh;
 		background: #2C3F60;
@@ -271,10 +427,6 @@
 					background: #F59A23;
 				}
 
-				.hidden {
-					display: none;
-				}
-
 				.diamond {
 					position: relative;
 					width: 12px;
@@ -305,20 +457,10 @@
 					border-width: 6px 6px 0 6px;
 					border-color: white transparent transparent transparent;
 					/* 下半部分三角形 */
-					bottom: 0;
+					bottom: -2px;
 					left: 0;
 				}
 
-				/* 为了调整两个三角形之间的空隙 */
-				.diamond::before {
-					margin-bottom: 3px;
-					/* 控制空隙的大小 */
-				}
-
-				.diamond::after {
-					margin-top: 3px;
-					/* 控制空隙的大小 */
-				}
 			}
 		}
 	}
